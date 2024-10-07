@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+  <title>Topic 4: Inheritance</title>
+</head>
+
+<body>
+  <h1>Topic 4 - Inheritance</h1>
+  <div id="PersonInfo"></div>
+
+  <script>
+    class Person {
+      #name;
+      #age;
+      #status;
+
+      constructor(name, age, status) {
+        this.#name = name;
+        this.#age = age;
+        this.#status = status;
+      }
+
+      // GETTERS
+      get name() {
+        return this.#name;
+      }
+
+      get age() {
+        return this.#age;
+      }
+
+      get status() {
+        return this.#status;
+      }
+
+      // METHOD TO DISPLAY INFO in the console
+      displayInfo() {
+        console.log("Name: " + this.name);
+        console.log("Age: " + this.age);
+        console.log("Status: " + this.status);
+      }
+
+      // METHOD TO DISPLAY INFO via HTML
+      DisplayInfo_Html() {
+        return `
+          <strong>Name:</strong> ${this.name}<br>
+          <strong>Age:</strong> ${this.age}<br>
+          <strong>Status:</strong> ${this.status}<br>
+        `;
+      }
+    }
+
+    class Student extends Person {
+      constructor(name, age, status, grade) {
+        super(name, age, status);
+        this.grade = grade;
+      }
+
+      // Override METHOD to display additional grade info in the console
+      displayInfo() {
+        super.displayInfo(); // Call the parent class's method
+        console.log("Grade: " + this.grade);
+      }
+
+      // Override METHOD to display additional grade info in HTML
+      DisplayInfo_Html() {
+        return super.DisplayInfo_Html() + `
+          <strong>Grade:</strong> ${this.grade}<br><br>
+        `;
+      }
+    }
+
+    // Function to display all students' info in HTML
+    function displayAllStudents(students) {
+      const personInfoDiv = document.getElementById('PersonInfo');
+      let allInfo = '';
+
+      students.forEach(student => {
+        allInfo += student.DisplayInfo_Html();
+      });
+
+      personInfoDiv.innerHTML = allInfo;
+    }
+
+    // Create instances of Student
+    const student1 = new Student('jacoba', '21', 'Student', 'A');
+    const student2 = new Student('joshua', '21', 'Student', 'A');
+
+    // Array of students
+    const students = [student1, student2];
+
+    // Display all students' information in HTML
+    displayAllStudents(students);
+
+    // Display all students' information in the console
+    students.forEach(student => student.displayInfo());
+
+  </script>
+
+</body>
+
+</html>
