@@ -63,3 +63,44 @@ class ChartCreator {
         });
     }
   }
+  
+  class BarChart extends ChartCreator {
+    constructor(dataUrl) {
+        super(dataUrl);
+        this.barCtx = document.getElementById('barChart');
+    }
+  
+    createCharts() {
+        this.createBarChart();
+    }
+  
+    createBarChart() {
+        new Chart(this.barCtx, {
+            type: 'bar',
+            data: {
+                labels: this.chartData.labels,
+                datasets: [{
+                    label: 'cute points',
+                    data: this.chartData.data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+  }
+  
+  const lineChartCreator = new LineChart('data.json');
+  lineChartCreator.init();
+  
+  const barChartCreator = new BarChart('data.json');
+  barChartCreator.init();
+  
+  console.log(lineChartCreator.dataUrl);
+  console.log(barChartCreator.dataUrl);
